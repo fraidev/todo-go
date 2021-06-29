@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Restart when Rerun this command
+docker rm -f todo-server >/dev/null  2>&1
+
+docker run -d \
+    --name todo-server \
+    --network todo \
+    --env-file=./.env \
+    -v `pwd`:/code \
+    -p 3000:3000 \
+    todo

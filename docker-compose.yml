@@ -1,0 +1,16 @@
+version: '3.6'
+services:
+
+  todo-postgres:
+    image: postgres:13-alpine
+    container_name: todo-postgres
+    networks:
+      - todo
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+
+networks:
+  todo:
+    name: todo

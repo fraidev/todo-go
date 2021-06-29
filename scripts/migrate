@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. ./.env
+
+MIGRATION_DATABASE=$POSTGRES_URL
+
+until docker run --rm --network todo postgres:9.6.14 pg_isready -U $POSTGRES_USER -h $POSTGRES_HOSTNAME; do
+  sleep 1;
+done
+
+docker run -ti --rm -v `pwd`/migrations:/migrations --network todo migrate/migrate \
+  -path=/migrations/ -database "$MIGRATION_DATABASE" $1
